@@ -258,7 +258,6 @@ func _physics_process(delta):
 			$AnimationTree.set(crouch_iw_blend, lerp($AnimationTree.get(crouch_iw_blend), 1, delta * acceleration))
 				
 		else:
-			$aim_stay_delay.stop()
 			shoulder_target = 0.5 * sign(shoulder_target)
 		
 			if $AnimationTree.get(aim_transition) == 0:
