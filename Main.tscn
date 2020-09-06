@@ -1,8 +1,7 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://terrain.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Main.gd" type="Script" id=3]
 [ext_resource path="res://AmmoRefill.tscn" type="PackedScene" id=4]
 
 [sub_resource type="SpatialMaterial" id=1]
@@ -39,7 +38,6 @@ glow_blend_mode = 1
 glow_hdr_threshold = 0.42
 
 [node name="Main" type="Spatial"]
-script = ExtResource( 3 )
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 transform = Transform( 0.0205062, 0, -0.99979, 0, 1, 0, 0.99979, 0, 0.0205062, -117.891, -1.83756, -22.2712 )
