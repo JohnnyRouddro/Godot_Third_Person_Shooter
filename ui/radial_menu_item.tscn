@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://ui/radial_menu_click_mask.bmp" type="BitMap" id=1]
+[ext_resource path="res://ui/radial_menu.png" type="Texture" id=2]
+[ext_resource path="res://ui/radial_menu_hover.png" type="Texture" id=3]
+[ext_resource path="res://ui/radial_menu_item.gd" type="Script" id=4]
+
+[node name="0" type="Control"]
+modulate = Color( 0, 0.215686, 0.592157, 1 )
+mouse_filter = 2
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="button" type="TextureButton" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -120.5
+margin_top = -252.608
+margin_right = 120.5
+margin_bottom = -74.6079
+mouse_filter = 1
+texture_normal = ExtResource( 2 )
+texture_pressed = ExtResource( 3 )
+texture_hover = ExtResource( 3 )
+texture_click_mask = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="mouse_entered" from="button" to="." method="_on_button_mouse_entered"]
+[connection signal="mouse_exited" from="button" to="." method="_on_button_mouse_exited"]
+[connection signal="pressed" from="button" to="." method="_on_button_pressed"]

@@ -1,0 +1,39 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="Animation" id=1]
+resource_name = "fire"
+tracks/0/type = "value"
+tracks/0/path = NodePath("line_base/border:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.203063, 1 ),
+"update": 0,
+"values": [ Vector2( 40, 0 ), Vector2( 0, 0 ) ]
+}
+
+[node name="line_pivot" type="Node2D"]
+
+[node name="line_base" type="Node2D" parent="."]
+position = Vector2( 15, 0 )
+
+[node name="border" type="Line2D" parent="line_base"]
+points = PoolVector2Array( 0, 0, 10, 0 )
+width = 6.0
+default_color = Color( 0, 0.027451, 0.411765, 0.411765 )
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="line" type="Line2D" parent="line_base/border"]
+points = PoolVector2Array( 0, 0, 10, 0 )
+width = 2.0
+default_color = Color( 0.109804, 0.823529, 1, 1 )
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="anim" type="AnimationPlayer" parent="."]
+playback_speed = 5.68
+anims/fire = SubResource( 1 )
