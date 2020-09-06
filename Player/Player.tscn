@@ -1,0 +1,1586 @@
+[gd_scene load_steps=71 format=2]
+
+[ext_resource path="res://Player/Godot_Chan_Stealth_Shooter.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Player/Camera.gd" type="Script" id=2]
+[ext_resource path="res://Player/Player.gd" type="Script" id=3]
+[ext_resource path="res://Player/AnimationNodeBlendTree.tres" type="AnimationNodeBlendTree" id=4]
+[ext_resource path="res://Gun/scifi_gun1.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Gun/scifi_pistol1.tscn" type="PackedScene" id=6]
+[ext_resource path="res://ui/radial_menu_item.tscn" type="PackedScene" id=7]
+[ext_resource path="res://ui/rifle_icon.png" type="Texture" id=8]
+[ext_resource path="res://ui/pistol_icon.png" type="Texture" id=9]
+[ext_resource path="res://ui/RadialMenu.gd" type="Script" id=10]
+[ext_resource path="res://ui/flash1.png" type="Texture" id=11]
+[ext_resource path="res://ui/crosshair_line_base.tscn" type="PackedScene" id=12]
+[ext_resource path="res://ui/white.png" type="Texture" id=13]
+[ext_resource path="res://Player/Crosshair.gd" type="Script" id=14]
+[ext_resource path="res://Player/WeaponStats.gd" type="Script" id=15]
+[ext_resource path="res://ui/DSEG7ClassicMini-Bold.ttf" type="DynamicFontData" id=16]
+[ext_resource path="res://ui/Aldrich-Regular.ttf" type="DynamicFontData" id=17]
+
+[sub_resource type="CapsuleShape" id=1]
+radius = 0.514466
+height = 0.506644
+
+[sub_resource type="ParticlesMaterial" id=2]
+gravity = Vector3( 0, 0, 0 )
+angle = 360.0
+angle_random = 1.0
+scale = 0.7
+
+[sub_resource type="SpatialMaterial" id=3]
+flags_transparent = true
+flags_unshaded = true
+params_blend_mode = 1
+params_billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+albedo_texture = ExtResource( 11 )
+
+[sub_resource type="QuadMesh" id=4]
+material = SubResource( 3 )
+
+[sub_resource type="Curve" id=5]
+_data = [ Vector2( 0, 0 ), 0.0, 35.4, 0, 1, Vector2( 0.0282486, 1 ), 35.4, 0.0, 1, 0 ]
+
+[sub_resource type="CurveTexture" id=6]
+curve = SubResource( 5 )
+
+[sub_resource type="ParticlesMaterial" id=7]
+gravity = Vector3( 0, 0, -700 )
+scale_curve = SubResource( 6 )
+
+[sub_resource type="SpatialMaterial" id=8]
+flags_do_not_receive_shadows = true
+params_blend_mode = 1
+emission_enabled = true
+emission = Color( 0.823529, 1, 0, 1 )
+emission_energy = 16.0
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="CubeMesh" id=9]
+material = SubResource( 8 )
+size = Vector3( 0.05, 0.05, 12 )
+
+[sub_resource type="Animation" id=10]
+tracks/0/type = "value"
+tracks/0/path = NodePath("muzzle_flash:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("OmniLight:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("streaks:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="AnimationNodeAdd2" id=11]
+
+[sub_resource type="AnimationNodeAdd2" id=12]
+
+[sub_resource type="AnimationNodeAnimation" id=13]
+animation = "holster"
+
+[sub_resource type="AnimationNodeAnimation" id=14]
+animation = "aim_cancel"
+
+[sub_resource type="AnimationNodeAnimation" id=15]
+animation = "aim"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id=16]
+blend_point_0/node = SubResource( 14 )
+blend_point_0/pos = 0.0
+blend_point_1/node = SubResource( 15 )
+blend_point_1/pos = 1.0
+min_space = 0.0
+
+[sub_resource type="AnimationNodeAnimation" id=17]
+animation = "crouch"
+
+[sub_resource type="AnimationNodeAnimation" id=18]
+animation = "stand"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id=19]
+blend_point_0/node = SubResource( 17 )
+blend_point_0/pos = 0.0
+blend_point_1/node = SubResource( 18 )
+blend_point_1/pos = 1.0
+min_space = 0.0
+
+[sub_resource type="AnimationNodeBlend2" id=20]
+
+[sub_resource type="AnimationNodeAnimation" id=21]
+animation = "lean_right"
+
+[sub_resource type="AnimationNodeAnimation" id=22]
+animation = "shoulder_right"
+
+[sub_resource type="AnimationNodeAnimation" id=23]
+animation = "shoulder_left"
+
+[sub_resource type="AnimationNodeAnimation" id=24]
+animation = "lean_left"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id=25]
+blend_point_0/node = SubResource( 21 )
+blend_point_0/pos = 1.0
+blend_point_1/node = SubResource( 22 )
+blend_point_1/pos = 0.5
+blend_point_2/node = SubResource( 23 )
+blend_point_2/pos = -0.5
+blend_point_3/node = SubResource( 24 )
+blend_point_3/pos = -1.0
+
+[sub_resource type="AnimationNodeBlendTree" id=26]
+graph_offset = Vector2( 3, 201 )
+nodes/Add2/node = SubResource( 12 )
+nodes/Add2/position = Vector2( 300, 100 )
+"nodes/Add2 2/node" = SubResource( 11 )
+"nodes/Add2 2/position" = Vector2( 580, 160 )
+nodes/Animation/node = SubResource( 13 )
+nodes/Animation/position = Vector2( -180, -60 )
+nodes/aim/node = SubResource( 16 )
+nodes/aim/position = Vector2( 360, 300 )
+nodes/crouch_stand/node = SubResource( 19 )
+nodes/crouch_stand/position = Vector2( 40, 220 )
+nodes/holster/node = SubResource( 20 )
+nodes/holster/position = Vector2( 60, -20 )
+nodes/output/position = Vector2( 820, 120 )
+nodes/shoulder_weapon/node = SubResource( 25 )
+nodes/shoulder_weapon/position = Vector2( -200, 80 )
+node_connections = [ "output", 0, "Add2 2", "Add2", 0, "holster", "Add2", 1, "crouch_stand", "holster", 0, "Animation", "holster", 1, "shoulder_weapon", "Add2 2", 0, "Add2", "Add2 2", 1, "aim" ]
+
+[sub_resource type="Animation" id=27]
+tracks/0/type = "value"
+tracks/0/path = NodePath("Camroot/h/v/pivot/Camera:fov")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 35.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Camroot/h/v/pivot/Camera:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -2.98023e-07, 0, -1.81234 ) ]
+}
+
+[sub_resource type="Animation" id=28]
+tracks/0/type = "value"
+tracks/0/path = NodePath("Camroot/h/v/pivot/Camera:fov")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 65.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Camroot/h/v/pivot/Camera:translation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, -2.2 ) ]
+}
+
+[sub_resource type="Animation" id=29]
+tracks/0/type = "value"
+tracks/0/path = NodePath("Camroot:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, -0.420799, 0 ) ]
+}
+
+[sub_resource type="Animation" id=30]
+tracks/0/type = "value"
+tracks/0/path = NodePath("Camroot/h/v/pivot/spine_ik_target:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0.562912, 0.0182803 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Camroot/h/v/pivot/spine_ik_target:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 1.86, 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Camroot/h/v/pivot:translation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=31]
+tracks/0/type = "value"
+tracks/0/path = NodePath("Camroot/h/v/pivot/spine_ik_target:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0.016, 0.411, -0.01 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Camroot/h/v/pivot/spine_ik_target:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 1.86, 0, -44.693 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Camroot/h/v/pivot:translation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0.75, -0.08, 0 ) ]
+}
+
+[sub_resource type="Animation" id=32]
+tracks/0/type = "value"
+tracks/0/path = NodePath("Camroot/h/v/pivot/spine_ik_target:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -0.0163011, 0.410832, 0.0104622 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Camroot/h/v/pivot/spine_ik_target:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 1.86, -1.8233e-07, 44.693 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Camroot/h/v/pivot:translation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -0.75, -0.08, 0 ) ]
+}
+
+[sub_resource type="Animation" id=33]
+tracks/0/type = "value"
+tracks/0/path = NodePath("Camroot/h/v/pivot/spine_ik_target:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -0.4, 0.643, 0.018 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Camroot/h/v/pivot/spine_ik_target:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 1.86, 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Camroot/h/v/pivot:translation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0.4, -0.08, 0 ) ]
+}
+
+[sub_resource type="Animation" id=34]
+tracks/0/type = "value"
+tracks/0/path = NodePath("Camroot/h/v/pivot/spine_ik_target:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0.4, 0.643, 0.018 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Camroot/h/v/pivot/spine_ik_target:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 1.86, 0, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Camroot/h/v/pivot:translation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( -0.4, -0.08, 0 ) ]
+}
+
+[sub_resource type="Animation" id=35]
+tracks/0/type = "value"
+tracks/0/path = NodePath("Camroot:translation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ) ]
+}
+
+[sub_resource type="DynamicFont" id=36]
+size = 43
+outline_size = 2
+outline_color = Color( 0.0235294, 0.466667, 1, 1 )
+font_data = ExtResource( 16 )
+
+[sub_resource type="DynamicFont" id=37]
+size = 57
+outline_size = 2
+outline_color = Color( 0.0235294, 0.466667, 1, 1 )
+font_data = ExtResource( 17 )
+
+[sub_resource type="DynamicFont" id=38]
+size = 24
+outline_size = 2
+outline_color = Color( 0.0235294, 0.466667, 1, 1 )
+font_data = ExtResource( 16 )
+
+[sub_resource type="VisualShaderNodeTexture" id=39]
+source = 1
+
+[sub_resource type="VisualShaderNodeInput" id=40]
+input_name = "screen_texture"
+
+[sub_resource type="VisualShaderNodeInput" id=41]
+input_name = "screen_uv"
+
+[sub_resource type="VisualShaderNodeScalarUniform" id=42]
+uniform_name = "blur_amount"
+
+[sub_resource type="VisualShaderNodeColorOp" id=43]
+operator = 8
+
+[sub_resource type="VisualShaderNodeColorConstant" id=44]
+constant = Color( 0.356863, 0.356863, 0.356863, 1 )
+
+[sub_resource type="VisualShader" id=45]
+code = "shader_type canvas_item;
+uniform float blur_amount;
+
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// Input:4
+	vec3 n_out4p0 = vec3(SCREEN_UV, 0.0);
+
+// ScalarUniform:5
+	float n_out5p0 = blur_amount;
+
+// Input:3
+
+// Texture:2
+	vec3 n_out2p0;
+	float n_out2p1;
+	{
+		vec4 _tex_read = textureLod(SCREEN_TEXTURE, n_out4p0.xy, n_out5p0);
+		n_out2p0 = _tex_read.rgb;
+		n_out2p1 = _tex_read.a;
+	}
+
+// Color:8
+	vec3 n_out8p0 = vec3(0.356863, 0.356863, 0.356863);
+	float n_out8p1 = 1.000000;
+
+// ColorOp:6
+	vec3 n_out6p0;
+	{
+		float base = n_out2p0.x;
+		float blend = n_out8p0.x;
+		if (base < 0.5) {
+			n_out6p0.x = (base * (2.0 * blend));
+		} else {
+			n_out6p0.x = (1.0 - (1.0 - base) * (1.0 - 2.0 * (blend - 0.5)));
+		}
+	}
+	{
+		float base = n_out2p0.y;
+		float blend = n_out8p0.y;
+		if (base < 0.5) {
+			n_out6p0.y = (base * (2.0 * blend));
+		} else {
+			n_out6p0.y = (1.0 - (1.0 - base) * (1.0 - 2.0 * (blend - 0.5)));
+		}
+	}
+	{
+		float base = n_out2p0.z;
+		float blend = n_out8p0.z;
+		if (base < 0.5) {
+			n_out6p0.z = (base * (2.0 * blend));
+		} else {
+			n_out6p0.z = (1.0 - (1.0 - base) * (1.0 - 2.0 * (blend - 0.5)));
+		}
+	}
+
+// Output:0
+	COLOR.rgb = n_out6p0;
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+custom_defines = ""
+graph_offset = Vector2( -318.667, 197 )
+mode = 1
+flags/light_only = false
+nodes/fragment/0/position = Vector2( 520, 220 )
+nodes/fragment/2/node = SubResource( 39 )
+nodes/fragment/2/position = Vector2( 180, 200 )
+nodes/fragment/3/node = SubResource( 40 )
+nodes/fragment/3/position = Vector2( -100, 280 )
+nodes/fragment/4/node = SubResource( 41 )
+nodes/fragment/4/position = Vector2( -100, 200 )
+nodes/fragment/5/node = SubResource( 42 )
+nodes/fragment/5/position = Vector2( -80, 240 )
+nodes/fragment/6/node = SubResource( 43 )
+nodes/fragment/6/position = Vector2( 340, 200 )
+nodes/fragment/8/node = SubResource( 44 )
+nodes/fragment/8/position = Vector2( 200, 300 )
+nodes/fragment/connections = PoolIntArray( 5, 0, 2, 1, 4, 0, 2, 0, 3, 0, 2, 2, 2, 0, 6, 0, 6, 0, 0, 0, 8, 0, 6, 1 )
+
+[sub_resource type="ShaderMaterial" id=46]
+shader = SubResource( 45 )
+shader_param/blur_amount = 0.0
+
+[sub_resource type="Animation" id=47]
+length = 0.4
+step = 0.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Circle:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.01, 0.4 ),
+"transitions": PoolRealArray( 0.25, 1 ),
+"update": 0,
+"values": [ Vector2( 0.8, 0.8 ), Vector2( 1.1, 1.1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("blur:material:shader_param/blur_amount")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 0.25, 1 ),
+"update": 0,
+"values": [ 0.0, 3.0 ]
+}
+
+[sub_resource type="AudioStreamRandomPitch" id=48]
+
+[sub_resource type="ParticlesMaterial" id=49]
+direction = Vector3( 0, 1, 0 )
+initial_velocity = 4.0
+initial_velocity_random = 1.0
+scale = 3.0
+scale_random = 1.0
+
+[sub_resource type="SpatialMaterial" id=50]
+albedo_color = Color( 1, 0, 0, 1 )
+
+[sub_resource type="CubeMesh" id=51]
+material = SubResource( 50 )
+size = Vector3( 0.05, 0.05, 0.05 )
+
+[sub_resource type="SpatialMaterial" id=52]
+flags_transparent = true
+albedo_texture = ExtResource( 11 )
+
+[sub_resource type="QuadMesh" id=53]
+material = SubResource( 52 )
+
+[node name="Player" type="KinematicBody" groups=[
+"Player",
+]]
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_horizontal_guides_": [  ]
+}
+
+[node name="WeaponStats" type="Node" parent="."]
+script = ExtResource( 15 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0.766839, 0 )
+visible = false
+shape = SubResource( 1 )
+
+[node name="Mesh" type="Spatial" parent="."]
+
+[node name="Godot_Chan_Stealth_Shooter" parent="Mesh" instance=ExtResource( 1 )]
+
+[node name="Skeleton" parent="Mesh/Godot_Chan_Stealth_Shooter/Godot_Chan_Stealth" index="0"]
+bones/27/bound_children = [ NodePath("gun_attachment") ]
+bones/43/bound_children = [ NodePath("neck_attachment") ]
+
+[node name="gun_attachment" type="BoneAttachment" parent="Mesh/Godot_Chan_Stealth_Shooter/Godot_Chan_Stealth/Skeleton" index="8"]
+transform = Transform( -0.0671771, 0.925462, 0.372837, 0.476865, -0.298457, 0.826755, 0.876405, 0.233332, -0.421271, -0.147884, 1.05112, 0.100899 )
+bone_name = "hand_r"
+
+[node name="Rifle" type="Spatial" parent="Mesh/Godot_Chan_Stealth_Shooter/Godot_Chan_Stealth/Skeleton/gun_attachment"]
+
+[node name="scifi_gun1" parent="Mesh/Godot_Chan_Stealth_Shooter/Godot_Chan_Stealth/Skeleton/gun_attachment/Rifle" instance=ExtResource( 5 )]
+transform = Transform( -0.0462644, 0.0492228, -0.0213227, 0.00282256, 0.0303522, 0.063943, 0.0535684, 0.0409121, -0.0217846, -0.0174049, 0.189796, 0.0132965 )
+
+[node name="Pistol" type="Spatial" parent="Mesh/Godot_Chan_Stealth_Shooter/Godot_Chan_Stealth/Skeleton/gun_attachment"]
+visible = false
+
+[node name="scifi_pistol1" parent="Mesh/Godot_Chan_Stealth_Shooter/Godot_Chan_Stealth/Skeleton/gun_attachment/Pistol" instance=ExtResource( 6 )]
+transform = Transform( -0.0212634, 0.0204641, -0.00224973, 0.00140209, 0.00466622, 0.029193, 0.0205397, 0.0208667, -0.00432179, -0.00442243, 0.0715724, 0.0180326 )
+
+[node name="spine_ik" type="SkeletonIK" parent="Mesh/Godot_Chan_Stealth_Shooter/Godot_Chan_Stealth/Skeleton" index="9"]
+process_priority = 1
+root_bone = "spine_1"
+tip_bone = "spine_3"
+target_node = NodePath("../../../../../Camroot/h/v/pivot/spine_ik_target")
+
+[node name="neck_attachment" type="BoneAttachment" parent="Mesh/Godot_Chan_Stealth_Shooter/Godot_Chan_Stealth/Skeleton" index="10"]
+transform = Transform( 0.999954, -0.00876047, 0.00380498, 0.00955106, 0.917695, -0.397169, -1.23463e-05, 0.397188, 0.917737, 0.00330931, 1.25742, -0.0542905 )
+bone_name = "neck_1"
+
+[node name="OmniLight" type="OmniLight" parent="Mesh/Godot_Chan_Stealth_Shooter/Godot_Chan_Stealth/Skeleton/neck_attachment"]
+transform = Transform( 0.24106, 0.603549, -0.760012, 0.925422, 0.0929725, 0.367356, 0.292378, -0.791887, -0.536126, -0.00934879, 0.307541, 0.827944 )
+visible = false
+light_color = Color( 1, 0.988235, 0.733333, 1 )
+shadow_enabled = true
+shadow_reverse_cull_face = true
+omni_range = 15.0
+
+[node name="muzzle_flash" type="Particles" parent="Mesh/Godot_Chan_Stealth_Shooter/Godot_Chan_Stealth/Skeleton/neck_attachment"]
+transform = Transform( -0.772648, -1.17449e-05, -0.000430411, 0.000183072, 0.69011, -0.347466, 0.000389715, -0.347466, -0.690109, -0.112398, 0.278571, 0.658684 )
+visible = false
+amount = 1
+speed_scale = 8.0
+process_material = SubResource( 2 )
+draw_pass_1 = SubResource( 4 )
+
+[node name="streaks" type="Particles" parent="Mesh/Godot_Chan_Stealth_Shooter/Godot_Chan_Stealth/Skeleton/neck_attachment"]
+transform = Transform( -1, -1.43781e-05, 0.00105697, -0.000431203, 0.918479, -0.395472, -0.000965137, -0.395472, -0.918477, -0.11265, -0.0329839, 0.00761127 )
+visible = false
+amount = 1
+speed_scale = 6.0
+process_material = SubResource( 7 )
+draw_pass_1 = SubResource( 9 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Mesh/Godot_Chan_Stealth_Shooter/Godot_Chan_Stealth/Skeleton/neck_attachment"]
+playback_speed = 8.0
+anims/muzzle_flash = SubResource( 10 )
+
+[node name="Camroot" type="Spatial" parent="."]
+script = ExtResource( 2 )
+
+[node name="h" type="Spatial" parent="Camroot"]
+
+[node name="v" type="Spatial" parent="Camroot/h"]
+transform = Transform( 1, 0, 0, 0, 0.999853, 0.0171383, 0, -0.0171383, 0.999853, 0, 1.59832, 0 )
+
+[node name="pivot" type="Spatial" parent="Camroot/h/v"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, -0.08, 0 )
+
+[node name="Camera" type="ClippedCamera" parent="Camroot/h/v/pivot"]
+transform = Transform( -1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0, -2.2 )
+fov = 65.0
+far = 8192.0
+process_mode = 1
+
+[node name="ray" type="RayCast" parent="Camroot/h/v/pivot/Camera"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -2.7 )
+enabled = true
+cast_to = Vector3( 0, 0, -1000 )
+
+[node name="spine_ik_target" type="Position3D" parent="Camroot/h/v/pivot"]
+transform = Transform( 1, 0, 0, 0, 0.999473, -0.0324574, 0, 0.0324574, 0.999473, 0.4, 0.643, 0.018 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = ExtResource( 4 )
+anim_player = NodePath("../Mesh/Godot_Chan_Stealth_Shooter/AnimationPlayer")
+active = true
+process_mode = 0
+parameters/ag_transition/current = 1
+parameters/ag_weapon_transition/current = 1
+parameters/aim_transition/current = 1
+parameters/crouch_iw_blend/blend_amount = 0.0
+parameters/crouch_walk/blend_position = Vector2( -0.004, 1 )
+parameters/cs_transition/current = 1
+parameters/ir_rifle_blend/blend_amount = 0.0
+parameters/iwr_blend/blend_amount = -1.0
+parameters/jump_blend/blend_position = 1.0
+parameters/neck_front/blend_amount = 0.0
+parameters/reload/active = false
+parameters/reload_scale/scale = 1.25
+parameters/roll/active = false
+parameters/roll_blend/blend_position = 1.0
+parameters/roll_scale/scale = 1.0
+parameters/run_scale/scale = 1.0
+parameters/walk/blend_position = Vector2( 0.004, 1 )
+parameters/walk_scale/scale = 1.5
+parameters/weapon_blend/blend_amount = 1.0
+parameters/weapon_change_aim/blend_position = 0.0
+parameters/weapon_change_idle/blend_position = 0.0
+parameters/weapon_change_on_air/blend_position = 0.0
+parameters/weapon_change_run/blend_position = 0.0
+parameters/weapon_change_switch/blend_position = 0.0
+parameters/weapon_switch/active = false
+parameters/weapon_switch_scale/scale = 1.0
+parameters/weapon_switch_seek/seek_position = -1.0
+
+[node name="CamAnimTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 26 )
+anim_player = NodePath("../CamAnimation")
+active = true
+process_mode = 0
+parameters/Add2/add_amount = 1.0
+"parameters/Add2 2/add_amount" = 1.0
+parameters/aim/blend_position = 0
+parameters/crouch_stand/blend_position = 1.0
+parameters/holster/blend_amount = 1.0
+parameters/shoulder_weapon/blend_position = 0.5
+
+[node name="CamAnimation" type="AnimationPlayer" parent="."]
+anims/aim = SubResource( 27 )
+anims/aim_cancel = SubResource( 28 )
+anims/crouch = SubResource( 29 )
+anims/holster = SubResource( 30 )
+anims/lean_left = SubResource( 31 )
+anims/lean_right = SubResource( 32 )
+anims/shoulder_left = SubResource( 33 )
+anims/shoulder_right = SubResource( 34 )
+anims/stand = SubResource( 35 )
+
+[node name="roll_timer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.2
+one_shot = true
+
+[node name="crouch_timer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.3
+one_shot = true
+
+[node name="shoot_timer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.1
+one_shot = true
+
+[node name="aim_stay_delay" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.5
+one_shot = true
+
+[node name="reload_timer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 0.05
+one_shot = true
+
+[node name="Status" type="Control" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+rect_scale = Vector2( 0.876583, 0.876583 )
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="W" type="ColorRect" parent="Status"]
+margin_left = -38.6819
+margin_top = 100.933
+margin_right = 13.3181
+margin_bottom = 154.933
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Status/W"]
+margin_left = 2.86395
+margin_top = 15.2955
+margin_right = 49.864
+margin_bottom = 46.2955
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "W
+forward"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Q" type="ColorRect" parent="Status"]
+margin_left = -110.66
+margin_top = 101.0
+margin_right = -50.6599
+margin_bottom = 155.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Status/Q"]
+margin_left = 2.16995
+margin_top = 14.4547
+margin_right = 58.17
+margin_bottom = 45.4547
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Q
+shoulder"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="A" type="ColorRect" parent="Status"]
+margin_left = -101.682
+margin_top = 164.433
+margin_right = -49.6819
+margin_bottom = 218.433
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Status/A"]
+margin_left = 7.98871
+margin_top = 16.1629
+margin_right = 47.9887
+margin_bottom = 47.1629
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "A
+left"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="ColorRect" parent="Status"]
+margin_left = -345.676
+margin_top = 164.433
+margin_right = -293.676
+margin_bottom = 218.433
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Status/Control"]
+margin_left = 8.65311
+margin_top = 16.3864
+margin_right = 48.6531
+margin_bottom = 47.3864
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Ctrl
+roll"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="X" type="ColorRect" parent="Status"]
+margin_left = -226.132
+margin_top = 164.433
+margin_right = -174.132
+margin_bottom = 218.433
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Status/X"]
+margin_left = 6.47381
+margin_top = 15.8006
+margin_right = 49.4738
+margin_bottom = 46.8006
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "X
+crouch"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="C" type="ColorRect" parent="Status"]
+margin_left = -169.046
+margin_top = 163.585
+margin_right = -117.046
+margin_bottom = 217.585
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Status/C"]
+margin_left = 6.47381
+margin_top = 4.45448
+margin_right = 46.4738
+margin_bottom = 52.4545
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "C
+lean
+right"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Z" type="ColorRect" parent="Status"]
+margin_left = -285.588
+margin_top = 163.585
+margin_right = -233.588
+margin_bottom = 217.585
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Status/Z"]
+margin_left = 5.13894
+margin_top = 4.45451
+margin_right = 45.1389
+margin_bottom = 52.4545
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Z
+lean
+left"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="F" type="ColorRect" parent="Status"]
+margin_left = 141.657
+margin_top = 80.0005
+margin_right = 193.657
+margin_bottom = 134.001
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Status/F"]
+margin_left = 3.30017
+margin_top = 13.7984
+margin_right = 48.3002
+margin_bottom = 44.7984
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "F
+holster"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="R" type="ColorRect" parent="Status"]
+margin_left = 58.7583
+margin_top = 81.7097
+margin_right = 110.758
+margin_bottom = 135.71
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Status/R"]
+margin_left = 3.30017
+margin_top = 13.7984
+margin_right = 48.3002
+margin_bottom = 44.7984
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "R
+reload"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="G" type="ColorRect" parent="Status"]
+margin_left = 214.093
+margin_top = 81.7097
+margin_right = 266.093
+margin_bottom = 135.71
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Status/G"]
+margin_left = 3.30017
+margin_top = 3.62359
+margin_right = 48.3002
+margin_bottom = 51.6236
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "G
+radial
+menu"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="S" type="ColorRect" parent="Status"]
+margin_left = -38.6819
+margin_top = 164.433
+margin_right = 13.3181
+margin_bottom = 218.433
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Status/S"]
+margin_left = 6.81671
+margin_top = 14.8281
+margin_right = 46.8167
+margin_bottom = 45.8281
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "S
+back"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="D" type="ColorRect" parent="Status"]
+margin_left = 23.8181
+margin_top = 164.433
+margin_right = 75.8181
+margin_bottom = 218.433
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Status/D"]
+margin_left = 6.65387
+margin_top = 14.1606
+margin_right = 46.6539
+margin_bottom = 45.1606
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "D
+right"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Space" type="ColorRect" parent="Status"]
+margin_left = 127.318
+margin_top = 164.933
+margin_right = 255.318
+margin_bottom = 218.933
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Status/Space"]
+margin_left = 44.4583
+margin_top = 16.1629
+margin_right = 84.4583
+margin_bottom = 47.1629
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Space
+jump"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Shift" type="ColorRect" parent="Status"]
+margin_left = -345.472
+margin_top = 93.0
+margin_right = -255.472
+margin_bottom = 147.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Status/Shift"]
+margin_left = 22.1483
+margin_top = 15.4955
+margin_right = 62.1483
+margin_bottom = 46.4955
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "Shift
+sprint"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Aim" type="ColorRect" parent="Status"]
+margin_left = 321.455
+margin_top = 164.52
+margin_right = 389.455
+margin_bottom = 218.52
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Status/Aim"]
+margin_left = 7.08289
+margin_top = 16.1629
+margin_right = 62.0829
+margin_bottom = 47.1629
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "R Mouse
+aim"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Status"]
+margin_left = -92.0419
+margin_top = 234.989
+margin_right = -52.0419
+margin_bottom = 248.989
+rect_scale = Vector2( 1.40679, 1.40679 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="Status"]
+margin_left = -92.0419
+margin_top = 263.497
+margin_right = -52.0419
+margin_bottom = 277.497
+rect_scale = Vector2( 1.40679, 1.40679 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="Status"]
+margin_left = -92.0419
+margin_top = 291.052
+margin_right = -52.0419
+margin_bottom = 305.052
+rect_scale = Vector2( 1.40679, 1.40679 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label4" type="Label" parent="Status"]
+margin_left = -92.0419
+margin_top = 319.561
+margin_right = -52.0419
+margin_bottom = 333.561
+rect_scale = Vector2( 1.40679, 1.40679 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Crosshair" type="Control" parent="UI"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+mouse_filter = 2
+script = ExtResource( 14 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="center" type="Node2D" parent="UI/Crosshair"]
+
+[node name="border" type="Line2D" parent="UI/Crosshair/center"]
+points = PoolVector2Array( -0.1, 0, 0.1, 0 )
+width = 6.0
+default_color = Color( 0, 0.027451, 0.411765, 0.411765 )
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="dot" type="Line2D" parent="UI/Crosshair/center"]
+points = PoolVector2Array( -0.1, 0, 0.1, 0 )
+width = 2.0
+default_color = Color( 0.109804, 0.823529, 1, 1 )
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="reticle" type="Node2D" parent="UI/Crosshair"]
+
+[node name="lines" type="Node2D" parent="UI/Crosshair/reticle"]
+
+[node name="line_pivot" parent="UI/Crosshair/reticle/lines" instance=ExtResource( 12 )]
+
+[node name="line_pivot2" parent="UI/Crosshair/reticle/lines" instance=ExtResource( 12 )]
+rotation = 1.57079
+
+[node name="line_pivot3" parent="UI/Crosshair/reticle/lines" instance=ExtResource( 12 )]
+rotation = 3.14159
+
+[node name="line_pivot4" parent="UI/Crosshair/reticle/lines" instance=ExtResource( 12 )]
+rotation = 4.71238
+
+[node name="Label" type="Label" parent="UI"]
+margin_left = 40.0
+margin_top = 626.0
+margin_right = 80.0
+margin_bottom = 640.0
+rect_scale = Vector2( 4.76602, 4.76602 )
+
+[node name="Mag" type="Control" parent="UI"]
+anchor_top = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="UI/Mag"]
+margin_left = 40.9497
+margin_top = -111.121
+margin_right = 233.95
+margin_bottom = -31.1213
+mouse_filter = 2
+color = Color( 0, 0.0901961, 0.282353, 0.666667 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="mag" type="Label" parent="UI/Mag"]
+margin_left = 69.0226
+margin_top = -95.3755
+margin_right = 139.023
+margin_bottom = -52.3755
+custom_fonts/font = SubResource( 36 )
+text = "35"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="UI/Mag"]
+margin_left = 101.866
+margin_top = -90.0782
+margin_right = 171.866
+margin_bottom = -36.0782
+custom_fonts/font = SubResource( 37 )
+text = "/"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ammo_backup" type="Label" parent="UI/Mag"]
+margin_left = 173.0
+margin_top = -70.0
+margin_right = 221.0
+margin_bottom = -40.0
+custom_fonts/font = SubResource( 38 )
+text = "35"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RadialMenu" type="Control" parent="."]
+pause_mode = 2
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="blur" type="TextureRect" parent="RadialMenu"]
+material = SubResource( 46 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = ExtResource( 13 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Circle" type="Control" parent="RadialMenu"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+rect_scale = Vector2( 1.02029, 1.02029 )
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="0" parent="RadialMenu/Circle" instance=ExtResource( 7 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+
+[node name="1" parent="RadialMenu/Circle" instance=ExtResource( 7 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+rect_rotation = 59.9999
+
+[node name="2" parent="RadialMenu/Circle" instance=ExtResource( 7 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+rect_rotation = 120.0
+
+[node name="3" parent="RadialMenu/Circle" instance=ExtResource( 7 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+rect_rotation = 180.0
+
+[node name="4" parent="RadialMenu/Circle" instance=ExtResource( 7 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+rect_rotation = 240.0
+
+[node name="5" parent="RadialMenu/Circle" instance=ExtResource( 7 )]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+rect_rotation = 300.0
+
+[node name="icons" type="Node2D" parent="RadialMenu/Circle"]
+
+[node name="Rifle" type="Sprite" parent="RadialMenu/Circle/icons"]
+position = Vector2( -3.1748, -187.313 )
+texture = ExtResource( 8 )
+
+[node name="Pistol" type="Sprite" parent="RadialMenu/Circle/icons"]
+position = Vector2( 153.978, -87.3071 )
+texture = ExtResource( 9 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="RadialMenu"]
+anims/zoom = SubResource( 47 )
+
+[node name="shoot_sfx" type="AudioStreamPlayer" parent="."]
+stream = SubResource( 48 )
+
+[node name="reload_sfx" type="AudioStreamPlayer" parent="."]
+
+[node name="Label" type="Label" parent="."]
+margin_left = 72.0814
+margin_top = 90.7691
+margin_right = 124.081
+margin_bottom = 104.769
+rect_scale = Vector2( 3.25176, 3.25176 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="splatters" type="Spatial" parent="."]
+
+[node name="0" type="Particles" parent="splatters"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20409, 1.27021 )
+emitting = false
+amount = 12
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+process_material = SubResource( 49 )
+draw_pass_1 = SubResource( 51 )
+
+[node name="1" type="Particles" parent="splatters"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20409, 1.27021 )
+emitting = false
+amount = 12
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+process_material = SubResource( 49 )
+draw_pass_1 = SubResource( 51 )
+
+[node name="2" type="Particles" parent="splatters"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20409, 1.27021 )
+emitting = false
+amount = 12
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+process_material = SubResource( 49 )
+draw_pass_1 = SubResource( 51 )
+
+[node name="3" type="Particles" parent="splatters"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20409, 1.27021 )
+emitting = false
+amount = 12
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+process_material = SubResource( 49 )
+draw_pass_1 = SubResource( 51 )
+
+[node name="4" type="Particles" parent="splatters"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20409, 1.27021 )
+emitting = false
+amount = 12
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+process_material = SubResource( 49 )
+draw_pass_1 = SubResource( 51 )
+
+[node name="5" type="Particles" parent="splatters"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20409, 1.27021 )
+emitting = false
+amount = 12
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+process_material = SubResource( 49 )
+draw_pass_1 = SubResource( 51 )
+
+[node name="6" type="Particles" parent="splatters"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20409, 1.27021 )
+emitting = false
+amount = 12
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+process_material = SubResource( 49 )
+draw_pass_1 = SubResource( 51 )
+
+[node name="7" type="Particles" parent="splatters"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20409, 1.27021 )
+emitting = false
+amount = 12
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+process_material = SubResource( 49 )
+draw_pass_1 = SubResource( 51 )
+
+[node name="8" type="Particles" parent="splatters"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20409, 1.27021 )
+emitting = false
+amount = 12
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+process_material = SubResource( 49 )
+draw_pass_1 = SubResource( 51 )
+
+[node name="9" type="Particles" parent="splatters"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20409, 1.27021 )
+emitting = false
+amount = 12
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+process_material = SubResource( 49 )
+draw_pass_1 = SubResource( 51 )
+
+[node name="10" type="Particles" parent="splatters"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20409, 1.27021 )
+emitting = false
+amount = 12
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+process_material = SubResource( 49 )
+draw_pass_1 = SubResource( 51 )
+
+[node name="11" type="Particles" parent="splatters"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20409, 1.27021 )
+emitting = false
+amount = 12
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+process_material = SubResource( 49 )
+draw_pass_1 = SubResource( 51 )
+
+[node name="12" type="Particles" parent="splatters"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20409, 1.27021 )
+emitting = false
+amount = 12
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+process_material = SubResource( 49 )
+draw_pass_1 = SubResource( 51 )
+
+[node name="13" type="Particles" parent="splatters"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20409, 1.27021 )
+emitting = false
+amount = 12
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+process_material = SubResource( 49 )
+draw_pass_1 = SubResource( 51 )
+
+[node name="14" type="Particles" parent="splatters"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20409, 1.27021 )
+emitting = false
+amount = 12
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+process_material = SubResource( 49 )
+draw_pass_1 = SubResource( 51 )
+
+[node name="15" type="Particles" parent="splatters"]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.20409, 1.27021 )
+emitting = false
+amount = 12
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+process_material = SubResource( 49 )
+draw_pass_1 = SubResource( 51 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+transform = Transform( 1, 0, 0, 0, -0.993528, 0.113584, 0, -0.113584, -0.993528, 0, 1.07494, 2 )
+visible = false
+mesh = SubResource( 53 )
+material/0 = null
+[connection signal="timeout" from="reload_timer" to="." method="_on_reload_timer_timeout"]
+
+[editable path="Mesh/Godot_Chan_Stealth_Shooter"]

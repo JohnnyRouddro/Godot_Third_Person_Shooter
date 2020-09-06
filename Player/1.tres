@@ -1,0 +1,258 @@
+[gd_resource type="AnimationNodeBlendTree" load_steps=47 format=2]
+
+[sub_resource type="AnimationNodeAnimation" id=1]
+animation = "T"
+
+[sub_resource type="AnimationNodeAnimation" id=2]
+animation = "run_forward-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=3]
+animation = "roll"
+
+[sub_resource type="AnimationNodeAnimation" id=4]
+animation = "idle_rifle-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=5]
+animation = "run_forward_rifle-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "aim_rifle-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=7]
+animation = "on_air_rifle-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "roll-rifle"
+
+[sub_resource type="AnimationNodeAnimation" id=9]
+animation = "crouch-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=10]
+animation = "idle-loop"
+
+[sub_resource type="AnimationNodeTransition" id=11]
+input_count = 2
+xfade_time = 0.2
+input_0/name = "on_air"
+input_0/auto_advance = false
+input_1/name = "on_ground"
+input_1/auto_advance = false
+
+[sub_resource type="AnimationNodeTransition" id=12]
+input_count = 2
+xfade_time = 0.25
+input_0/name = "on_air"
+input_0/auto_advance = false
+input_1/name = "on_ground"
+input_1/auto_advance = false
+
+[sub_resource type="AnimationNodeTransition" id=13]
+input_count = 2
+xfade_time = 0.25
+input_0/name = "aiming"
+input_0/auto_advance = false
+input_1/name = "not_aiming"
+input_1/auto_advance = false
+
+[sub_resource type="AnimationNodeBlend2" id=14]
+filters = [ "Godot_Chan_Stealth/Skeleton:ball_l", "Godot_Chan_Stealth/Skeleton:ball_r", "Godot_Chan_Stealth/Skeleton:calf_l", "Godot_Chan_Stealth/Skeleton:calf_r", "Godot_Chan_Stealth/Skeleton:foot_l", "Godot_Chan_Stealth/Skeleton:foot_r", "Godot_Chan_Stealth/Skeleton:hand_l", "Godot_Chan_Stealth/Skeleton:head", "Godot_Chan_Stealth/Skeleton:index_1_l", "Godot_Chan_Stealth/Skeleton:index_1_r", "Godot_Chan_Stealth/Skeleton:index_2_l", "Godot_Chan_Stealth/Skeleton:index_2_r", "Godot_Chan_Stealth/Skeleton:index_3_l", "Godot_Chan_Stealth/Skeleton:index_3_r", "Godot_Chan_Stealth/Skeleton:middle_1_l", "Godot_Chan_Stealth/Skeleton:middle_1_r", "Godot_Chan_Stealth/Skeleton:middle_2_l", "Godot_Chan_Stealth/Skeleton:middle_2_r", "Godot_Chan_Stealth/Skeleton:middle_3_l", "Godot_Chan_Stealth/Skeleton:middle_3_r", "Godot_Chan_Stealth/Skeleton:neck_1", "Godot_Chan_Stealth/Skeleton:pelvis", "Godot_Chan_Stealth/Skeleton:pinky_1_l", "Godot_Chan_Stealth/Skeleton:pinky_1_r", "Godot_Chan_Stealth/Skeleton:pinky_2_l", "Godot_Chan_Stealth/Skeleton:pinky_2_r", "Godot_Chan_Stealth/Skeleton:pinky_3_l", "Godot_Chan_Stealth/Skeleton:pinky_3_r", "Godot_Chan_Stealth/Skeleton:ring_1_l", "Godot_Chan_Stealth/Skeleton:ring_1_r", "Godot_Chan_Stealth/Skeleton:ring_2_l", "Godot_Chan_Stealth/Skeleton:ring_2_r", "Godot_Chan_Stealth/Skeleton:ring_3_l", "Godot_Chan_Stealth/Skeleton:ring_3_r", "Godot_Chan_Stealth/Skeleton:root", "Godot_Chan_Stealth/Skeleton:spine_1", "Godot_Chan_Stealth/Skeleton:spine_2", "Godot_Chan_Stealth/Skeleton:spine_3", "Godot_Chan_Stealth/Skeleton:thigh_l", "Godot_Chan_Stealth/Skeleton:thigh_r", "Godot_Chan_Stealth/Skeleton:thumb_1_l", "Godot_Chan_Stealth/Skeleton:thumb_1_r", "Godot_Chan_Stealth/Skeleton:thumb_2_l", "Godot_Chan_Stealth/Skeleton:thumb_2_r", "Godot_Chan_Stealth/Skeleton:thumb_3_l", "Godot_Chan_Stealth/Skeleton:thumb_3_r" ]
+
+[sub_resource type="AnimationNodeAnimation" id=15]
+animation = "crouch-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=16]
+animation = "crouch_walk_right-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=17]
+animation = "crouch_walk_left-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=18]
+animation = "crouch_walk_forward_right-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=19]
+animation = "crouch_walk_back_right-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=20]
+animation = "crouch_walk_forward_left-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=21]
+animation = "crouch_walk_back_left-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=22]
+animation = "crouch_walk_forward-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=23]
+animation = "crouch_walk_back-loop"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id=24]
+blend_point_0/node = SubResource( 15 )
+blend_point_0/pos = Vector2( 0, 0 )
+blend_point_1/node = SubResource( 16 )
+blend_point_1/pos = Vector2( 1, 0 )
+blend_point_2/node = SubResource( 17 )
+blend_point_2/pos = Vector2( -1, 0 )
+blend_point_3/node = SubResource( 18 )
+blend_point_3/pos = Vector2( 1, 1 )
+blend_point_4/node = SubResource( 19 )
+blend_point_4/pos = Vector2( 1, -1 )
+blend_point_5/node = SubResource( 20 )
+blend_point_5/pos = Vector2( -1, 1 )
+blend_point_6/node = SubResource( 21 )
+blend_point_6/pos = Vector2( -1, -1 )
+blend_point_7/node = SubResource( 22 )
+blend_point_7/pos = Vector2( 0, 1 )
+blend_point_8/node = SubResource( 23 )
+blend_point_8/pos = Vector2( 0, -1 )
+
+[sub_resource type="AnimationNodeTimeScale" id=25]
+
+[sub_resource type="AnimationNodeTransition" id=26]
+input_count = 2
+xfade_time = 0.2
+input_0/name = "crouching"
+input_0/auto_advance = false
+input_1/name = "standing"
+input_1/auto_advance = false
+
+[sub_resource type="AnimationNodeBlend2" id=27]
+filter_enabled = true
+filters = [ "Godot_Chan_Stealth/Skeleton:clavicle_l", "Godot_Chan_Stealth/Skeleton:clavicle_r", "Godot_Chan_Stealth/Skeleton:hand_l", "Godot_Chan_Stealth/Skeleton:hand_r", "Godot_Chan_Stealth/Skeleton:index_1_l", "Godot_Chan_Stealth/Skeleton:index_1_r", "Godot_Chan_Stealth/Skeleton:index_2_l", "Godot_Chan_Stealth/Skeleton:index_2_r", "Godot_Chan_Stealth/Skeleton:index_3_l", "Godot_Chan_Stealth/Skeleton:index_3_r", "Godot_Chan_Stealth/Skeleton:lowerarm_l", "Godot_Chan_Stealth/Skeleton:lowerarm_r", "Godot_Chan_Stealth/Skeleton:middle_1_l", "Godot_Chan_Stealth/Skeleton:middle_1_r", "Godot_Chan_Stealth/Skeleton:middle_2_l", "Godot_Chan_Stealth/Skeleton:middle_2_r", "Godot_Chan_Stealth/Skeleton:middle_3_l", "Godot_Chan_Stealth/Skeleton:middle_3_r", "Godot_Chan_Stealth/Skeleton:pinky_1_l", "Godot_Chan_Stealth/Skeleton:pinky_1_r", "Godot_Chan_Stealth/Skeleton:pinky_2_l", "Godot_Chan_Stealth/Skeleton:pinky_2_r", "Godot_Chan_Stealth/Skeleton:pinky_3_l", "Godot_Chan_Stealth/Skeleton:pinky_3_r", "Godot_Chan_Stealth/Skeleton:ring_1_l", "Godot_Chan_Stealth/Skeleton:ring_1_r", "Godot_Chan_Stealth/Skeleton:ring_2_l", "Godot_Chan_Stealth/Skeleton:ring_2_r", "Godot_Chan_Stealth/Skeleton:ring_3_l", "Godot_Chan_Stealth/Skeleton:ring_3_r", "Godot_Chan_Stealth/Skeleton:thumb_1_l", "Godot_Chan_Stealth/Skeleton:thumb_1_r", "Godot_Chan_Stealth/Skeleton:thumb_2_l", "Godot_Chan_Stealth/Skeleton:thumb_2_r", "Godot_Chan_Stealth/Skeleton:thumb_3_l", "Godot_Chan_Stealth/Skeleton:thumb_3_r", "Godot_Chan_Stealth/Skeleton:upperarm_l", "Godot_Chan_Stealth/Skeleton:upperarm_r" ]
+
+[sub_resource type="AnimationNodeBlend3" id=28]
+
+[sub_resource type="AnimationNodeAnimation" id=29]
+animation = "jump_up-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=30]
+animation = "fall_down-loop"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id=31]
+blend_point_0/node = SubResource( 29 )
+blend_point_0/pos = 1.0
+blend_point_1/node = SubResource( 30 )
+blend_point_1/pos = -1.0
+
+[sub_resource type="AnimationNodeBlend2" id=32]
+filter_enabled = true
+filters = [ "Godot_Chan_Stealth/Skeleton:head", "Godot_Chan_Stealth/Skeleton:neck_1" ]
+
+[sub_resource type="AnimationNodeOneShot" id=33]
+filters = [ "Godot_Chan_Stealth/Skeleton:ball_l", "Godot_Chan_Stealth/Skeleton:ball_r", "Godot_Chan_Stealth/Skeleton:calf_l", "Godot_Chan_Stealth/Skeleton:calf_r", "Godot_Chan_Stealth/Skeleton:foot_l", "Godot_Chan_Stealth/Skeleton:foot_r", "Godot_Chan_Stealth/Skeleton:head", "Godot_Chan_Stealth/Skeleton:neck_1", "Godot_Chan_Stealth/Skeleton:pelvis", "Godot_Chan_Stealth/Skeleton:root", "Godot_Chan_Stealth/Skeleton:spine_1", "Godot_Chan_Stealth/Skeleton:spine_2", "Godot_Chan_Stealth/Skeleton:spine_3", "Godot_Chan_Stealth/Skeleton:thigh_l", "Godot_Chan_Stealth/Skeleton:thigh_r" ]
+
+[sub_resource type="AnimationNodeTransition" id=34]
+input_count = 2
+xfade_time = 0.1
+input_0/name = "roll_holster"
+input_0/auto_advance = false
+input_1/name = "roll_weapon"
+input_1/auto_advance = false
+
+[sub_resource type="AnimationNodeAnimation" id=35]
+animation = "walk_forward-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=36]
+animation = "walk_backward-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=37]
+animation = "walk_right-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=38]
+animation = "walk_left-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=39]
+animation = "walk_forward_right-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=40]
+animation = "walk_back_right-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=41]
+animation = "walk_forward_left-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=42]
+animation = "walk_back_left-loop"
+
+[sub_resource type="AnimationNodeAnimation" id=43]
+animation = "idle-loop"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id=44]
+blend_point_0/node = SubResource( 35 )
+blend_point_0/pos = Vector2( 0, 1 )
+blend_point_1/node = SubResource( 36 )
+blend_point_1/pos = Vector2( 0, -1 )
+blend_point_2/node = SubResource( 37 )
+blend_point_2/pos = Vector2( 1, 0 )
+blend_point_3/node = SubResource( 38 )
+blend_point_3/pos = Vector2( -1, 0 )
+blend_point_4/node = SubResource( 39 )
+blend_point_4/pos = Vector2( 1, 1 )
+blend_point_5/node = SubResource( 40 )
+blend_point_5/pos = Vector2( 1, -1 )
+blend_point_6/node = SubResource( 41 )
+blend_point_6/pos = Vector2( -1, 1 )
+blend_point_7/node = SubResource( 42 )
+blend_point_7/pos = Vector2( -1, -1 )
+blend_point_8/node = SubResource( 43 )
+blend_point_8/pos = Vector2( 0, 0 )
+
+[sub_resource type="AnimationNodeTimeScale" id=45]
+
+[sub_resource type="AnimationNodeBlend2" id=46]
+filter_enabled = true
+filters = [ "Godot_Chan_Stealth/Skeleton:clavicle_l", "Godot_Chan_Stealth/Skeleton:clavicle_r", "Godot_Chan_Stealth/Skeleton:hand_l", "Godot_Chan_Stealth/Skeleton:hand_r", "Godot_Chan_Stealth/Skeleton:index_1_l", "Godot_Chan_Stealth/Skeleton:index_1_r", "Godot_Chan_Stealth/Skeleton:index_2_l", "Godot_Chan_Stealth/Skeleton:index_2_r", "Godot_Chan_Stealth/Skeleton:index_3_l", "Godot_Chan_Stealth/Skeleton:index_3_r", "Godot_Chan_Stealth/Skeleton:lowerarm_l", "Godot_Chan_Stealth/Skeleton:lowerarm_r", "Godot_Chan_Stealth/Skeleton:middle_1_l", "Godot_Chan_Stealth/Skeleton:middle_1_r", "Godot_Chan_Stealth/Skeleton:middle_2_l", "Godot_Chan_Stealth/Skeleton:middle_2_r", "Godot_Chan_Stealth/Skeleton:middle_3_l", "Godot_Chan_Stealth/Skeleton:middle_3_r", "Godot_Chan_Stealth/Skeleton:pinky_1_l", "Godot_Chan_Stealth/Skeleton:pinky_1_r", "Godot_Chan_Stealth/Skeleton:pinky_2_l", "Godot_Chan_Stealth/Skeleton:pinky_2_r", "Godot_Chan_Stealth/Skeleton:pinky_3_l", "Godot_Chan_Stealth/Skeleton:pinky_3_r", "Godot_Chan_Stealth/Skeleton:ring_1_l", "Godot_Chan_Stealth/Skeleton:ring_1_r", "Godot_Chan_Stealth/Skeleton:ring_2_l", "Godot_Chan_Stealth/Skeleton:ring_2_r", "Godot_Chan_Stealth/Skeleton:ring_3_l", "Godot_Chan_Stealth/Skeleton:ring_3_r", "Godot_Chan_Stealth/Skeleton:thumb_1_l", "Godot_Chan_Stealth/Skeleton:thumb_1_r", "Godot_Chan_Stealth/Skeleton:thumb_2_l", "Godot_Chan_Stealth/Skeleton:thumb_2_r", "Godot_Chan_Stealth/Skeleton:thumb_3_l", "Godot_Chan_Stealth/Skeleton:thumb_3_r", "Godot_Chan_Stealth/Skeleton:upperarm_l", "Godot_Chan_Stealth/Skeleton:upperarm_r" ]
+
+[resource]
+graph_offset = Vector2( -464.286, -201.429 )
+nodes/Animation/node = SubResource( 10 )
+nodes/Animation/position = Vector2( -523.077, 153.846 )
+"nodes/Animation 11/node" = SubResource( 1 )
+"nodes/Animation 11/position" = Vector2( 700, 400 )
+"nodes/Animation 2/node" = SubResource( 2 )
+"nodes/Animation 2/position" = Vector2( -553.846, 400 )
+"nodes/Animation 3/node" = SubResource( 3 )
+"nodes/Animation 3/position" = Vector2( 266.667, 433.333 )
+"nodes/Animation 4/node" = SubResource( 4 )
+"nodes/Animation 4/position" = Vector2( -400, 533.333 )
+"nodes/Animation 5/node" = SubResource( 5 )
+"nodes/Animation 5/position" = Vector2( -453.333, 666.667 )
+"nodes/Animation 6/node" = SubResource( 6 )
+"nodes/Animation 6/position" = Vector2( 0, 233.333 )
+"nodes/Animation 7/node" = SubResource( 7 )
+"nodes/Animation 7/position" = Vector2( -266.667, 366.667 )
+"nodes/Animation 8/node" = SubResource( 8 )
+"nodes/Animation 8/position" = Vector2( 266.667, 566.667 )
+"nodes/Animation 9/node" = SubResource( 9 )
+"nodes/Animation 9/position" = Vector2( -560, -106.667 )
+nodes/ag_aim_transition/node = SubResource( 11 )
+nodes/ag_aim_transition/position = Vector2( 33.3333, 366.667 )
+nodes/ag_transition/node = SubResource( 12 )
+nodes/ag_transition/position = Vector2( 240, 53.3333 )
+nodes/aim_transition/node = SubResource( 13 )
+nodes/aim_transition/position = Vector2( 266.667, 233.333 )
+nodes/crouch_iw_blend/node = SubResource( 14 )
+nodes/crouch_iw_blend/position = Vector2( -320, -26.6667 )
+nodes/crouch_walk/node = SubResource( 24 )
+nodes/crouch_walk/position = Vector2( -746.667, 26.6667 )
+nodes/crouch_walk_scale/node = SubResource( 25 )
+nodes/crouch_walk_scale/position = Vector2( -560, 26.6667 )
+nodes/cs_transition/node = SubResource( 26 )
+nodes/cs_transition/position = Vector2( -26.6667, 80 )
+nodes/ir_rifle_blend/node = SubResource( 27 )
+nodes/ir_rifle_blend/position = Vector2( -166.667, 500 )
+nodes/iwr_blend/node = SubResource( 28 )
+nodes/iwr_blend/position = Vector2( -280, 180 )
+nodes/jump_blend/node = SubResource( 31 )
+nodes/jump_blend/position = Vector2( -26.6667, -80 )
+nodes/neck_front/node = SubResource( 32 )
+nodes/neck_front/position = Vector2( 900, 200 )
+nodes/output/position = Vector2( 1066.67, 233.333 )
+nodes/roll/node = SubResource( 33 )
+nodes/roll/position = Vector2( 700, 200 )
+nodes/roll_holster_transition/node = SubResource( 34 )
+nodes/roll_holster_transition/position = Vector2( 466.667, 366.667 )
+nodes/walk/node = SubResource( 44 )
+nodes/walk/position = Vector2( -769.231, 276.923 )
+nodes/walk_scale/node = SubResource( 45 )
+nodes/walk_scale/position = Vector2( -523.077, 276.923 )
+nodes/weapon_blend/node = SubResource( 46 )
+nodes/weapon_blend/position = Vector2( 466.667, 100 )
+node_connections = [ "output", 0, "neck_front", "ag_transition", 0, "jump_blend", "ag_transition", 1, "cs_transition", "weapon_blend", 0, "ag_transition", "weapon_blend", 1, "aim_transition", "ag_aim_transition", 0, "Animation 7", "ag_aim_transition", 1, "ir_rifle_blend", "aim_transition", 0, "Animation 6", "aim_transition", 1, "ag_aim_transition", "crouch_iw_blend", 0, "Animation 9", "crouch_iw_blend", 1, "crouch_walk_scale", "iwr_blend", 0, "Animation", "iwr_blend", 1, "walk_scale", "iwr_blend", 2, "Animation 2", "walk_scale", 0, "walk", "cs_transition", 0, "crouch_iw_blend", "cs_transition", 1, "iwr_blend", "ir_rifle_blend", 0, "Animation 4", "ir_rifle_blend", 1, "Animation 5", "roll", 0, "weapon_blend", "roll", 1, "roll_holster_transition", "roll_holster_transition", 0, "Animation 3", "roll_holster_transition", 1, "Animation 8", "neck_front", 0, "roll", "neck_front", 1, "Animation 11", "crouch_walk_scale", 0, "crouch_walk" ]
