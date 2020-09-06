@@ -287,17 +287,6 @@ func _physics_process(delta):
 		
 			$AnimationTree.set(crouch_iw_blend, velocity.length()/crouch_walk_speed)
 		
-		if $WeaponStats.mag() < 1 && $reload_timer.is_stopped() && !$AnimationTree.get(roll_active):
-			reload()
-		
-		aim_turn = 0
-		
-		$UI/Crosshair.pos_x = $WeaponStats.spread() + $WeaponStats.movement_spread() * velocity.length() + $WeaponStats.jump_spread() * int(!is_on_floor())
-		$UI/Crosshair.pos_x += $WeaponStats.aim_spread() * $CamAnimTree.get(cam_aim) + $WeaponStats.crouch_spread() * (1 - crouch_stand_target)
-		
-		$UI/Mag/mag.text = String($WeaponStats.mag())
-		$UI/Mag/ammo_backup.text = String($WeaponStats.ammo_backup())
-		
 	# ======================================= AIM MODE END ===================================
 	
 	
@@ -335,6 +324,18 @@ func _physics_process(delta):
 		$CamAnimTree.set(cam_shoulder, lerp($CamAnimTree.get(cam_shoulder), shoulder_target, delta * 7))
 		$CamAnimTree.set(cam_crouch_stand, lerp($CamAnimTree.get(cam_crouch_stand), crouch_stand_target, delta * 4))
 	
+	
+		if $WeaponStats.mag() < 1 && $reload_timer.is_stopped() && !$AnimationTree.get(roll_active):
+			reload()
+		
+		aim_turn = 0
+		
+		$UI/Crosshair.pos_x = $WeaponStats.spread() + $WeaponStats.movement_spread() * velocity.length() + $WeaponStats.jump_spread() * int(!is_on_floor())
+		$UI/Crosshair.pos_x += $WeaponStats.aim_spread() * $CamAnimTree.get(cam_aim) + $WeaponStats.crouch_spread() * (1 - crouch_stand_target)
+		
+		$UI/Mag/mag.text = String($WeaponStats.mag())
+		$UI/Mag/ammo_backup.text = String($WeaponStats.ammo_backup())
+		
 	
 	if weapon_ray.is_colliding() && (weapon_ray.get_collision_point()-weapon_ray.global_transform.origin).length() > 0.1:
 		weapon_ray_tip = weapon_ray.get_collision_point()
