@@ -7,7 +7,7 @@ onready var weapon_reload = [preload("res://Audio/Rifle_reload.wav"), preload("r
 onready var weapon_ray = $Camroot/h/v/pivot/Camera/ray
 
 var weapons = ["Rifle", "Pistol"]
-var current_weapon = 0
+var current_weapon = -1
 var fired_once = false
 
 var direction = Vector3.BACK
@@ -67,6 +67,7 @@ var splatter = 0
 var weapon_ray_tip = Vector3()
 
 func _ready():
+	randomize()
 	direction = Vector3.BACK.rotated(Vector3.UP, $Camroot/h.global_transform.basis.get_euler().y)
 	# Sometimes in the level design you might need to rotate the Player object itself
 	# So changing the direction at the beginning
@@ -78,7 +79,7 @@ func _ready():
 func _input(event):
 	
 	if event is InputEventMouseMotion:
-		aim_turn = -event.relative.x * 0.015
+		aim_turn = -event.relative.x * 0.015 # animates player strafe, when standing, aiming, and looking left right
 	
 	if event is InputEventKey:
 		if event.as_text() == "W" || event.as_text() == "A" || event.as_text() == "S" || event.as_text() == "D" || event.as_text() == "Space" || event.as_text() == "Control" || event.as_text() == "Shift" || event.as_text() == "X" || event.as_text() == "F" || event.as_text() == "Q" || event.as_text() == "C" || event.as_text() == "Z" || event.as_text() == "R":
@@ -209,14 +210,12 @@ func _physics_process(delta):
 					fired_once = true
 					
 					$shoot_timer.start(1 / $WeaponStats.fire_rate())
-					$shoot_sfx.stream.audio_stream = weapon_fire[current_weapon]
 					$shoot_sfx.play()
 				
 					$WeaponStats.mag_decrement()
 				
 					$UI/Crosshair.fire($WeaponStats.fire_rate() * 0.2)
 				
-					neck_attachment.get_node("AnimationPlayer").playback_speed = clamp($WeaponStats.fire_rate(), 5, 10)
 					neck_attachment.get_node("AnimationPlayer").play("muzzle_flash")
 				
 					
@@ -380,10 +379,11 @@ func switch_weapon(to):
 		$reload_timer.stop()#cancelling reload if weapon switching
 		$AnimationTree.set(reload_active, false)#cancelling reload if weapon switching
 		
-	
 		neck_attachment.get_node("muzzle_flash").speed_scale = $WeaponStats.fire_rate()
 		neck_attachment.get_node("streaks").speed_scale = $WeaponStats.fire_rate() / 1.45
 		neck_attachment.get_node("streaks").process_material.gravity.z = -(8000 / $WeaponStats.fire_rate())
+		neck_attachment.get_node("AnimationPlayer").playback_speed = clamp($WeaponStats.fire_rate(), 5, 10)
+		$shoot_sfx.stream.audio_stream = weapon_fire[current_weapon]
 
 
 func reload():
