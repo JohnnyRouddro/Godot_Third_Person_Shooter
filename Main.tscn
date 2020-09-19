@@ -41,11 +41,11 @@ glow_hdr_threshold = 0.42
 [node name="Main" type="Spatial"]
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
-transform = Transform( 0.0205062, 0, -0.99979, 0, 1, 0, 0.99979, 0, 0.0205062, -117.891, -1.83756, -22.2712 )
+transform = Transform( 0.0205062, 0, -0.99979, 0, 1, 0, 0.99979, 0, 0.0205062, -117.893, -1.87239, -22.2786 )
 movement_sprint_toggle = false
-jr_jump_magnitude = 10
+jr_jump_magnitude = 5.0
 jr_roll_magnitude = 20
-gravity = 28
+gravity = 9.0
 
 [node name="MeshInstance6" type="MeshInstance" parent="."]
 transform = Transform( 1.02848, 0, 0, 0, 5.18743, 0, 0, 0, 11.7131, -131.251, 3.07605, -15.0727 )

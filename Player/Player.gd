@@ -18,11 +18,11 @@ var movement_sprint_toggle = false
 var sprinting = false
 
 #Jump/Roll
-var jr_jump_magnitude = 10
+var jr_jump_magnitude = 5
 var jr_roll_magnitude = 20
 
 #Gravity
-var gravity = 28
+var gravity = 9
 var weight_on_ground = 5
 var vertical_velocity = 0
 
