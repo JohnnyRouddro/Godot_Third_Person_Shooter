@@ -1,59 +1,109 @@
-name: 'Godot Export'
-description: 'Automatically exports your Godot games.'
-author: 'Firebelley'
-branding:
-  icon: 'box'
-  color: 'white'
-inputs:
-  # required inputs
-  godot_executable_download_url:
-    description: The download url of the 64 bit Linux Headless Godot executable.
-    required: true
-  godot_export_templates_download_url:
-    description: The url of the export templates corresponding to the Godot executable version.
-    required: true
-  relative_project_path:
-    description: The relative path containing the "project.godot" file.
-    required: true
+name: "godot-ci export"
+on: push
 
-  # optional inputs
-  archive_export_output:
-    description: If exports should be archived.
-    default: false
-    required: false
-  archive_single_release_output:
-    description: If exports that result in single files should be archived.
-    default: true
-    required: false
-  base_version:
-    description: The version which new releases start at.
-    default: 0.0.1
-    required: false
-  create_release:
-    description: If releases should be automatically created.
-    default: true
-    required: false
-  generate_release_notes:
-    description: If release notes should be automatically generated based on commit history.
-    default: false
-    required: false
-  use_preset_export_path:
-    description: If set to true, exports will be moved to directory defined in "export_presets.cfg" relative to the root of the Git repository. Prioritized over "relative_export_path".
-    default: false
-    required: false
-  relative_export_path:
-    description: If provided, exports will be moved to this directory relative to the root of the Git repository.
-    default: ''
-    required: false
-  update_windows_icons:
-    description: If Windows executable icons should be updated with the preset's .ico file.
-    default: false
-    required: false
-  export_debug:
-    description: If should export with debugging tools.
-    default: false
-    required: false
+env:
+  GODOT_VERSION: 3.2.3
+  EXPORT_NAME: test-project
 
-runs:
-  using: 'node12'
-  main: 'dist/index.js'
+jobs:
+  export-windows:
+    name: Windows Export
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:3.2.3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+      - name: Windows Build
+        run: |
+          mkdir -v -p build/windows
+          cd $EXPORT_NAME
+          godot -v --export "Windows Desktop" ../build/windows/$EXPORT_NAME.exe
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: windows
+          path: build/windows
+
+  export-linux:
+    name: Linux Export
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:3.2.3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+      - name: Linux Build
+        run: |
+          mkdir -v -p build/linux
+          cd $EXPORT_NAME
+          godot -v --export "Linux/X11" ../build/linux/$EXPORT_NAME.x86_64
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: linux
+          path: build/linux
+
+  export-web:
+    name: Web Export
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:3.2.3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+      - name: Web Build
+        run: |
+          mkdir -v -p build/web
+          cd $EXPORT_NAME
+          godot -v --export "HTML5" ../build/web/index.html
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: web
+          path: build/web
+      # Installing rsync is needed in order to deploy to GitHub Pages. Without it, the build will fail.
+      - name: Install rsync 📚
+        run: |
+          apt-get update && apt-get install -y rsync
+      - name: Deploy to GitHub Pages 🚀
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages # The branch the action should deploy to.
+          FOLDER: build/web # The folder the action should deploy.
+
+  export-mac:
+    name: Mac Export
+    runs-on: ubuntu-latest
+    container:
+      image: barichello/godot-ci:3.2.3
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup
+        run: |
+          mkdir -v -p ~/.local/share/godot/templates
+          mv /root/.local/share/godot/templates/${GODOT_VERSION}.stable ~/.local/share/godot/templates/${GODOT_VERSION}.stable
+      - name: Mac Build
+        run: |
+          mkdir -v -p build/mac
+          cd $EXPORT_NAME
+          godot -v --export "Mac OSX" ../build/mac/$EXPORT_NAME.zip
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: mac
+          path: build/mac
