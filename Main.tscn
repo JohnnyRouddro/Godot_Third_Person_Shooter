@@ -21,6 +21,7 @@ sun_longitude = -36.0
 [sub_resource type="Environment" id=5]
 background_mode = 2
 background_sky = SubResource( 4 )
+tonemap_mode = 3
 dof_blur_far_enabled = true
 dof_blur_far_distance = 0.01
 dof_blur_far_transition = 0.01
@@ -41,6 +42,10 @@ glow_hdr_threshold = 0.42
 
 [node name="Player" parent="." instance=ExtResource( 2 )]
 transform = Transform( 0.0205062, 0, -0.99979, 0, 1, 0, 0.99979, 0, 0.0205062, -117.891, -1.83756, -22.2712 )
+movement_sprint_toggle = false
+jr_jump_magnitude = 10
+jr_roll_magnitude = 20
+gravity = 28
 
 [node name="MeshInstance6" type="MeshInstance" parent="."]
 transform = Transform( 1.02848, 0, 0, 0, 5.18743, 0, 0, 0, 11.7131, -131.251, 3.07605, -15.0727 )
@@ -143,8 +148,8 @@ environment = SubResource( 5 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.9163, 0 )
 
 [node name="AmmoRefill" parent="." instance=ExtResource( 4 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -123.95, -1.90872, -21.1515 )
+transform = Transform( 0, 0, 1, 0, 1, 0, -1, 0, 0, -123, -1.9, -21 )
 
 [node name="AmmoRefill2" parent="." instance=ExtResource( 4 )]
-transform = Transform( -4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -123.95, -1.90872, -23.9198 )
+transform = Transform( 0, 0, 1, 0, 1, 0, -1, 0, 0, -123, -1.9, -25 )
 ammo_type = "Pistol"
