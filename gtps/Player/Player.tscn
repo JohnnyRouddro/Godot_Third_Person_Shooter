@@ -176,7 +176,7 @@ nodes/holster/position = Vector2( 60, -20 )
 nodes/output/position = Vector2( 820, 120 )
 nodes/shoulder_weapon/node = SubResource( 25 )
 nodes/shoulder_weapon/position = Vector2( -200, 80 )
-node_connections = [ "output", 0, "Add2 2", "Add2", 0, "holster", "Add2", 1, "crouch_stand", "holster", 0, "Animation", "holster", 1, "shoulder_weapon", "Add2 2", 0, "Add2", "Add2 2", 1, "aim" ]
+node_connections = [ "output", 0, "Add2 2", "holster", 0, "Animation", "holster", 1, "shoulder_weapon", "Add2", 0, "holster", "Add2", 1, "crouch_stand", "Add2 2", 0, "Add2", "Add2 2", 1, "aim" ]
 
 [sub_resource type="Animation" id=27]
 tracks/0/type = "value"
@@ -557,7 +557,6 @@ void light() {
 
 }
 "
-custom_defines = ""
 graph_offset = Vector2( -318.667, 197 )
 mode = 1
 flags/light_only = false
@@ -634,10 +633,18 @@ material = SubResource( 52 )
 [node name="Player" type="KinematicBody" groups=[
 "Player",
 ]]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -8.11782e+06, 0 )
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_horizontal_guides_": [  ]
 }
+Movement = ""
+movement_walk_speed = 2.2
+movement_run_speed = 5.0
+movement_walk_speed = 2.2
+movement_run_speed = 5.0
+right_layer_ofs_1 = null
+right_layer_ofs_2 = null
 
 [node name="WeaponStats" type="Node" parent="."]
 script = ExtResource( 15 )
@@ -656,7 +663,7 @@ bones/27/bound_children = [ NodePath("gun_attachment") ]
 bones/43/bound_children = [ NodePath("neck_attachment") ]
 
 [node name="gun_attachment" type="BoneAttachment" parent="Mesh/Godot_Chan_Stealth_Shooter/Godot_Chan_Stealth/Skeleton" index="8"]
-transform = Transform( -0.0671771, 0.925462, 0.372837, 0.476865, -0.298457, 0.826755, 0.876405, 0.233332, -0.421271, -0.147884, 1.05112, 0.100899 )
+transform = Transform( 0.0373914, 0.974241, 0.222389, 0.999298, -0.0369431, -0.00617599, 0.00219932, 0.222464, -0.974938, -0.151925, 1.1317, 0.290818 )
 bone_name = "hand_r"
 
 [node name="Rifle" type="Spatial" parent="Mesh/Godot_Chan_Stealth_Shooter/Godot_Chan_Stealth/Skeleton/gun_attachment"]
@@ -677,7 +684,7 @@ tip_bone = "spine_3"
 target_node = NodePath("../../../../../Camroot/h/v/pivot/spine_ik_target")
 
 [node name="neck_attachment" type="BoneAttachment" parent="Mesh/Godot_Chan_Stealth_Shooter/Godot_Chan_Stealth/Skeleton" index="10"]
-transform = Transform( 0.999954, -0.00876047, 0.00380498, 0.00955106, 0.917695, -0.397169, -1.23463e-05, 0.397188, 0.917737, 0.00330931, 1.25742, -0.0542905 )
+transform = Transform( 0.999954, -0.00876048, 0.00380497, 0.00943414, 0.843799, -0.536576, 0.00149011, 0.536587, 0.843843, 0.0033093, 1.24896, 0.00975939 )
 bone_name = "neck_1"
 
 [node name="OmniLight" type="OmniLight" parent="Mesh/Godot_Chan_Stealth_Shooter/Godot_Chan_Stealth/Skeleton/neck_attachment"]
@@ -738,15 +745,15 @@ tree_root = ExtResource( 4 )
 anim_player = NodePath("../Mesh/Godot_Chan_Stealth_Shooter/AnimationPlayer")
 active = true
 process_mode = 0
-parameters/ag_transition/current = 1
-parameters/ag_weapon_transition/current = 1
+parameters/ag_transition/current = 0
+parameters/ag_weapon_transition/current = 0
 parameters/aim_transition/current = 1
 parameters/crouch_iw_blend/blend_amount = 0.0
-parameters/crouch_walk/blend_position = Vector2( -0.004, 1 )
+parameters/crouch_walk/blend_position = Vector2( -7.00649e-45, 1 )
 parameters/cs_transition/current = 1
-parameters/ir_rifle_blend/blend_amount = 0.0
+parameters/ir_rifle_blend/blend_amount = 0
 parameters/iwr_blend/blend_amount = -1.0
-parameters/jump_blend/blend_position = 1.0
+parameters/jump_blend/blend_position = -2131.92
 parameters/neck_front/blend_amount = 0.0
 parameters/reload/active = false
 parameters/reload_scale/scale = 1.25
@@ -754,14 +761,14 @@ parameters/roll/active = false
 parameters/roll_blend/blend_position = 1.0
 parameters/roll_scale/scale = 1.0
 parameters/run_scale/scale = 1.0
-parameters/walk/blend_position = Vector2( 0.004, 1 )
-parameters/walk_scale/scale = 1.5
+parameters/walk/blend_position = Vector2( 7.00649e-45, 1 )
+parameters/walk_scale/scale = 2.2
 parameters/weapon_blend/blend_amount = 1.0
-parameters/weapon_change_aim/blend_position = 0.0
-parameters/weapon_change_idle/blend_position = 0.0
-parameters/weapon_change_on_air/blend_position = 0.0
-parameters/weapon_change_run/blend_position = 0.0
-parameters/weapon_change_switch/blend_position = 0.0
+parameters/weapon_change_aim/blend_position = 0
+parameters/weapon_change_idle/blend_position = 0
+parameters/weapon_change_on_air/blend_position = 0
+parameters/weapon_change_run/blend_position = 0
+parameters/weapon_change_switch/blend_position = 0
 parameters/weapon_switch/active = false
 parameters/weapon_switch_scale/scale = 1.0
 parameters/weapon_switch_seek/seek_position = -1.0
@@ -773,7 +780,7 @@ active = true
 process_mode = 0
 parameters/Add2/add_amount = 1.0
 "parameters/Add2 2/add_amount" = 1.0
-parameters/aim/blend_position = 0
+parameters/aim/blend_position = 0.0
 parameters/crouch_stand/blend_position = 1.0
 parameters/holster/blend_amount = 1.0
 parameters/shoulder_weapon/blend_position = 0.5
